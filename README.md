@@ -12,7 +12,19 @@ Dự án này minh họa cách xây dựng và tích hợp **OAuth2 Authorizatio
 - [Troubleshooting](#-troubleshooting)
 
 ## 🏗️ Kiến trúc hệ thống
-![OAuth2 Flow](oauth2-flow.png)
+
+```mermaid
+graph TB
+    Client[Client Application] 
+    AuthServer[Authorization Server<br/>Port: 9000]
+    ResourceServer[Resource Server<br/>Port: 8081]
+    
+    Client -->|1. Request Token| AuthServer
+    AuthServer -->|2. JWT Token| Client
+    Client -->|3. API Call + JWT| ResourceServer
+    ResourceServer -->|4. Validate JWT| AuthServer
+    ResourceServer -->|5. Protected Data| Client
+```
 
 ### Các thành phần:
 
@@ -491,7 +503,7 @@ curl -X POST http://localhost:9000/oauth2/token \
   -d "grant_type=client_credentials&scope=read write"
 ```
 
-#### 2. **403 Forbidden**
+#### 2. **403 Forbidden** 
 **Nguyên nhân**:
 - Token hợp lệ nhưng không có scope cần thiết
 - Endpoint yêu cầu scope cao hơn
@@ -510,7 +522,7 @@ curl -X POST http://localhost:9000/oauth2/token \
 #### 3. **Connection Refused**
 **Nguyên nhân**:
 - Authorization Server không chạy
-- Resource Server không chạy
+- Resource Server không chạy  
 - Port bị conflicts
 
 **Khắc phục**:
