@@ -12,19 +12,7 @@ Dự án này minh họa cách xây dựng và tích hợp **OAuth2 Authorizatio
 - [Troubleshooting](#-troubleshooting)
 
 ## 🏗️ Kiến trúc hệ thống
-
-```mermaid
-graph TB
-    Client[Client Application] 
-    AuthServer[Authorization Server\nPort: 9000]
-    ResourceServer[Resource Server\nPort: 8081]
-    
-    Client -->|1. Request Token| AuthServer
-    AuthServer -->|2. JWT Token| Client
-    Client -->|3. API Call + JWT| ResourceServer
-    ResourceServer -->|4. Validate JWT| AuthServer
-    ResourceServer -->|5. Protected Data| Client
-```
+![OAuth2 Flow](oauth2-flow.png)
 
 ### Các thành phần:
 
