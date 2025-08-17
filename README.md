@@ -16,8 +16,8 @@ Dự án này minh họa cách xây dựng và tích hợp **OAuth2 Authorizatio
 ```mermaid
 graph TB
     Client[Client Application] 
-    AuthServer[Authorization Server Port 9000]
-    ResourceServer[Resource Server Port 8081]
+    AuthServer[Authorization Server\nPort: 9000]
+    ResourceServer[Resource Server\nPort: 8081]
     
     Client -->|1. Request Token| AuthServer
     AuthServer -->|2. JWT Token| Client
