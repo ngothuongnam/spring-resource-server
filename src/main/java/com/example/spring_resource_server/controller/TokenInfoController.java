@@ -15,14 +15,14 @@ public class TokenInfoController {
     @GetMapping("/info")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getTokenInfo(@AuthenticationPrincipal Jwt jwt) {
         Map<String, Object> tokenInfo = Map.of(
-                "client_id", jwt.getClaimAsString("client_id"),
-                "subject", jwt.getSubject(),
-                "scopes", jwt.getClaimAsString("scope"),
-                "issued_at", jwt.getIssuedAt(),
-                "expires_at", jwt.getExpiresAt(),
-                "issuer", jwt.getIssuer(),
-                "audience", jwt.getAudience(),
-                "all_claims", jwt.getClaims()
+                "sub", jwt.getClaimAsString("sub"),
+                "aud", jwt.getClaimAsString("aud"),
+                "nbf", jwt.getClaimAsString("nbf"),
+                "scope", jwt.getClaimAsString("scope"),
+                "iss", jwt.getClaimAsString("iss"),
+                "exp", jwt.getClaimAsString("exp"),
+                "iat", jwt.getClaimAsString("iat"),
+                "jti", jwt.getClaimAsString("jti")
         );
 
         return ResponseEntity.ok(ApiResponse.success("Thông tin JWT Token", tokenInfo));

@@ -19,7 +19,7 @@ public class UserController {
     // GET /api/users - Danh sách users
     @GetMapping
     public ResponseEntity<ApiResponse<List<User>>> getUsers(@AuthenticationPrincipal Jwt jwt) {
-        log.info("Client {} đang truy cập danh sách users", jwt.getClaimAsString("client_id"));
+        log.info("Client {} đang truy cập danh sách users", jwt.getClaimAsString("sub"));
 
         List<User> users = List.of(
                 User.builder()
@@ -48,7 +48,7 @@ public class UserController {
     // GET /api/users/{id} - Chi tiết user
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<User>> getUser(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
-        log.info("Client {} đang xem user ID: {}", jwt.getClaimAsString("client_id"), id);
+        log.info("Client {} đang xem user ID: {}", jwt.getClaimAsString("sub"), id);
 
         User user = User.builder()
                 .id(id)

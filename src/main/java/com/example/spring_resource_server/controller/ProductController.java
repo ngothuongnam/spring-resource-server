@@ -47,7 +47,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Product>> createProduct(@RequestBody CreateProductRequest request,
                                                               @AuthenticationPrincipal Jwt jwt) {
         log.info("Client {} đang tạo sản phẩm mới: {}",
-                jwt.getClaimAsString("client_id"), request.getName());
+                jwt.getClaimAsString("sub"), request.getName());
 
         Product newProduct = Product.builder()
                 .id(999L)

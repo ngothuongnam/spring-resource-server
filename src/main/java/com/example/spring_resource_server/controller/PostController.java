@@ -19,7 +19,7 @@ public class PostController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<Post>>> getPosts(@AuthenticationPrincipal Jwt jwt) {
         log.info("Client {} với scopes: {} đang xem posts",
-                jwt.getClaimAsString("client_id"),
+                jwt.getClaimAsString("sub"),
                 jwt.getClaimAsString("scope"));
 
         List<Post> posts = List.of(
@@ -68,15 +68,15 @@ public class PostController {
     public ResponseEntity<ApiResponse<Post>> createPost(@RequestBody CreatePostRequest request,
                                                         @AuthenticationPrincipal Jwt jwt) {
         log.info("Client {} đang tạo bài viết mới: {}",
-                jwt.getClaimAsString("client_id"), request.getTitle());
+                jwt.getClaimAsString("sub"), request.getTitle());
 
         Post newPost = Post.builder()
                 .id(999L)
                 .title(request.getTitle())
                 .content(request.getContent())
                 .status(PostStatus.DRAFT)
-                .authorId(Long.parseLong(jwt.getSubject()))
-                .authorName(jwt.getClaimAsString("client_id"))
+                .authorId(1L)
+                .authorName(jwt.getClaimAsString("sub"))
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -89,14 +89,14 @@ public class PostController {
                                                         @RequestBody UpdatePostRequest request,
                                                         @AuthenticationPrincipal Jwt jwt) {
         log.info("Client {} đang cập nhật bài viết ID: {}",
-                jwt.getClaimAsString("client_id"), id);
+                jwt.getClaimAsString("sub"), id);
 
         Post updatedPost = Post.builder()
                 .id(id)
                 .title(request.getTitle())
                 .content(request.getContent())
                 .status(PostStatus.valueOf(request.getStatus().toUpperCase()))
-                .authorId(Long.parseLong(jwt.getSubject()))
+                .authorId(1L)
                 .updatedAt(LocalDateTime.now())
                 .build();
 
@@ -108,7 +108,7 @@ public class PostController {
     public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable Long id,
                                                           @AuthenticationPrincipal Jwt jwt) {
         log.info("Client {} đang xóa bài viết ID: {}",
-                jwt.getClaimAsString("client_id"), id);
+                jwt.getClaimAsString("sub"), id);
 
         return ResponseEntity.ok(ApiResponse.success("Đã xóa bài viết ID: " + id));
     }
